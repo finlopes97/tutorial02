@@ -80,7 +80,15 @@ entry:
     // Write assembly code to add 44 to 14685, storing the result in
     // register pair R31:R30 (low byte in R30).
 
+    // Load 14685 into R31:R30 
+    // 14685 => 00111001 01011101
+    // ldi r30, 0b01011101
+    // ldi r31, 0b00111001
+    // using lo8 and hi8 macros to load 14685
 
+    ldi r30, lo8(14685)
+    ldi r31, hi8(14685)
+    adiw r30, 44
 
     // Write your code for Ex 2.4 above this line.
     mov r16, r30
@@ -100,7 +108,12 @@ entry:
     // 0xFB => 0xBF
     // Step 4: Load the result of Step 3 into register R21.
 
-    ldi r21, 0xBF
+    // 4 = 0b00000100
+    // -4 = 0b11111011 => 0b11111100
+    // 0b11111100 => 0xFC
+    // 0xFC => 0xCF
+
+    ldi r21, 0xCF
 
     // Write your code for Ex 2.5 above this line.
     mov r16, r21
@@ -158,8 +171,8 @@ entry:
     // significant 4 bits of R4.
 
     // Create bitmask for MSB and LSB4
-    ldi r16, 0b10010000
-    ori r4, r16
+    ldi r16, 0b10001111
+    eor r4, r16
 
     // Write your code for Ex 2.9 above this line.
     mov r16, r4
